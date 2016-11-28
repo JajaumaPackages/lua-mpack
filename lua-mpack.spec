@@ -3,7 +3,8 @@
 %global lua_pkgdir %{_datadir}/lua/%{lua_version}
 
 BuildRequires:  libtool
-BuildRequires:  lua-devel >= %{lua_version}
+BuildRequires:  lua >= 5.3
+BuildRequires:  lua-devel >= 5.3
 
 Name:           lua-mpack
 Version:        1.0.3
