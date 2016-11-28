@@ -1,4 +1,5 @@
-%{!?lua_version: %global lua_version %(lua -e "print(string.sub(_VERSION, 5))")}
+#%{!?lua_version: %global lua_version %(lua -e "print(string.sub(_VERSION, 5))")}
+%global lua_version 5.3
 %global lua_libdir %{_libdir}/lua/%{lua_version}
 %global lua_pkgdir %{_datadir}/lua/%{lua_version}
 
