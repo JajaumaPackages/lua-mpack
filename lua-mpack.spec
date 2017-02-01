@@ -8,8 +8,8 @@ BuildRequires:  lua >= 5.3
 BuildRequires:  lua-devel >= 5.3
 
 Name:           lua-mpack
-Version:        1.0.3
-Release:        5%{?dist}
+Version:        1.0.4
+Release:        1%{?dist}
 
 License:        MIT
 Summary:        Implementation of MessagePack for Lua
@@ -18,7 +18,6 @@ Url:            https://github.com/tarruda/libmpack/
 Requires:       lua(abi) = %{lua_version}
 
 Source0:        https://github.com/tarruda/libmpack/archive/%{version}/libmpack-%{version}.tar.gz
-Patch0:         libmpack-1.0.3-fix_macro_redefine.patch
 
 %description
 mpack is a small binary serialization/RPC library that implements
@@ -26,8 +25,6 @@ both the msgpack and msgpack-rpc specifications.
 
 %prep
 %setup -q -n libmpack-%{version}
-
-%patch0 -p1 -b .libmpack-1.0.3-fix_macro_redefine.patch
 
 # hack to export flags
 pushd binding/lua
@@ -59,6 +56,9 @@ popd
 %{lua_libdir}/mpack.so
 
 %changelog
+* Wed Feb 01 2017 Andreas Schneider <asn@redhat.com> - 1.0.4-1
+- Update to version 1.0.4
+
 * Fri Nov 25 2016 Andreas Schneider <asn@redhat.com> - 1.0.3-5
 - Add requirement on ABI version and do not package lua directory
 
