@@ -57,7 +57,7 @@ popd
 
 %changelog
 * Wed Feb 01 2017 Andreas Schneider <asn@redhat.com> - 1.0.4-1
-- Update to version 1.0.4
+- resolves: #1417325 - Update to version 1.0.4
 
 * Fri Nov 25 2016 Andreas Schneider <asn@redhat.com> - 1.0.3-5
 - Add requirement on ABI version and do not package lua directory
