@@ -1,0 +1,17 @@
+Index: libmpack-lua-1.0.6/lmpack.c
+===================================================================
+--- libmpack-lua-1.0.6.orig/lmpack.c
++++ libmpack-lua-1.0.6/lmpack.c
+@@ -36,8 +36,10 @@
+  * representing msgpack integers, since `double` can't represent the full range.
+  */
+ typedef luaL_Reg luaL_reg;
+-#define luaL_register(L, name, lreg) (luaL_setfuncs((L), (lreg), 0))
+-#define lua_objlen(L, idx) (lua_rawlen(L, (idx)))
++# if LUA_VERSION_NUM > 503
++# define luaL_register(L, name, lreg) (luaL_setfuncs((L), (lreg), 0))
++# define lua_objlen(L, idx) (lua_rawlen(L, (idx)))
++# endif
+ #endif
+ 
+ typedef struct {

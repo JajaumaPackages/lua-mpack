@@ -3,59 +3,70 @@
 %global lua_libdir %{_libdir}/lua/%{lua_version}
 %global lua_pkgdir %{_datadir}/lua/%{lua_version}
 
+%global libmpack_version 1.0.5
+
 BuildRequires:  libtool
 BuildRequires:  lua >= 5.3
 BuildRequires:  lua-devel >= 5.3
 
 Name:           lua-mpack
-Version:        1.0.4
-Release:        2%{?dist}
+Version:        1.0.6
+Release:        1%{?dist}
 
 License:        MIT
 Summary:        Implementation of MessagePack for Lua
-Url:            https://github.com/tarruda/libmpack/
+Url:            https://github.com/libmpack/libmpack-lua
 
 Requires:       lua(abi) = %{lua_version}
 
-Source0:        https://github.com/tarruda/libmpack/archive/%{version}/libmpack-%{version}.tar.gz
+Source0:        https://github.com/libmpack/libmpack-lua/archive/%{version}/libmpack-lua-%{version}.tar.gz
+Source1:        https://github.com/libmpack/libmpack/archive/%{version}/libmpack-%{libmpack_version}.tar.gz
+
+Patch0:         lmpack_lua_5_3.patch
+Patch1:         lmpack_makefile.patch
 
 %description
 mpack is a small binary serialization/RPC library that implements
 both the msgpack and msgpack-rpc specifications.
 
 %prep
-%setup -q -n libmpack-%{version}
+%setup -q -n libmpack-lua-%{version}
 
-# hack to export flags
-pushd binding/lua
-echo '#!/bin/sh' > ./configure
-chmod +x ./configure
+%patch0 -p1
+%patch1 -p1
+
+mkdir mpack-src
+pushd mpack-src
+tar xfz %{SOURCE1} --strip-components=1
 popd
 
+# hack to export flags
+echo '#!/bin/sh' > ./configure
+chmod +x ./configure
+
 %build
-pushd binding/lua
+
 %configure
 make %{?_smp_mflags} \
      USE_SYSTEM_LUA=yes \
-     LUA_VERSION_MAJ_MIN=%{lua_version} \
-     LUA_LIB=$(pkg-config --libs lua)
-popd
+     MPACK_LUA_VERSION=%{lua_version} \
+     LUA_LIB="$(pkg-config --libs lua)" \
 
 %install
-pushd binding/lua
 make USE_SYSTEM_LUA=yes \
      LUA_CMOD_INSTALLDIR=%{lua_libdir} \
      DESTDIR=%{buildroot} \
      install
-popd
 
 %files
 %defattr(-,root,root)
-%license LICENSE-MIT
 %doc README.md
 %{lua_libdir}/mpack.so
 
 %changelog
+* Mon May 08 2017 Andreas Schneider <asn@redhat.com> - 1.0.6-1
+- Update to 1.0.6
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 

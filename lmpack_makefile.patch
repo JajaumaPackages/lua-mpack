@@ -1,0 +1,13 @@
+Index: libmpack-lua-1.0.6/Makefile
+===================================================================
+--- libmpack-lua-1.0.6.orig/Makefile
++++ libmpack-lua-1.0.6/Makefile
+@@ -98,7 +98,7 @@ ifeq ($(USE_SYSTEM_LUA),no)
+ $(MPACK): $(LUAROCKS) mpack-src lmpack.c
+ 	$(LUAROCKS) make CFLAGS='$(CFLAGS)'
+ else
+-$(MPACK): mpack-src lmpack.c
++$(MPACK): lmpack.c
+ 	$(CC) -shared $(CFLAGS) $(INCLUDES) $(LDFLAGS) $^ -o $@ $(LIBS)
+ endif
+ 
