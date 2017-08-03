@@ -11,7 +11,7 @@ BuildRequires:  lua-devel >= 5.3
 
 Name:           lua-mpack
 Version:        1.0.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 License:        MIT
 Summary:        Implementation of MessagePack for Lua
@@ -64,6 +64,9 @@ make USE_SYSTEM_LUA=yes \
 %{lua_libdir}/mpack.so
 
 %changelog
+* Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.6-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.6-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
