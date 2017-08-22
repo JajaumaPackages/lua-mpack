@@ -1,17 +1,16 @@
-#%{!?lua_version: %global lua_version %(lua -e "print(string.sub(_VERSION, 5))")}
-%global lua_version 5.3
+%{!?lua_version: %global lua_version %(lua -e "print(string.sub(_VERSION, 5))")}
 %global lua_libdir %{_libdir}/lua/%{lua_version}
 %global lua_pkgdir %{_datadir}/lua/%{lua_version}
 
 %global libmpack_version 1.0.5
 
 BuildRequires:  libtool
-BuildRequires:  lua >= 5.3
-BuildRequires:  lua-devel >= 5.3
+BuildRequires:  lua >= %{lua_version}
+BuildRequires:  lua-devel >= %{lua_version}
 
 Name:           lua-mpack
 Version:        1.0.6
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 License:        MIT
 Summary:        Implementation of MessagePack for Lua
@@ -20,7 +19,7 @@ Url:            https://github.com/libmpack/libmpack-lua
 Requires:       lua(abi) = %{lua_version}
 
 Source0:        https://github.com/libmpack/libmpack-lua/archive/%{version}/libmpack-lua-%{version}.tar.gz
-Source1:        https://github.com/libmpack/libmpack/archive/%{version}/libmpack-%{libmpack_version}.tar.gz
+Source1:        https://github.com/libmpack/libmpack/archive/%{libmpack_version}/libmpack-%{libmpack_version}.tar.gz
 
 Patch0:         lmpack_lua_5_3.patch
 Patch1:         lmpack_makefile.patch
@@ -64,6 +63,9 @@ make USE_SYSTEM_LUA=yes \
 %{lua_libdir}/mpack.so
 
 %changelog
+* Tue Aug 22 2017 Jajauma's Packages <jajauma@yandex.ru> - 1.0.6-4
+- Fixes for building with older lua on RHEL
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.6-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
